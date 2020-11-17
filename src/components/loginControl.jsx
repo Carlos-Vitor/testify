@@ -7,13 +7,14 @@ class LoginControl extends Component {
     constructor(props) {
         super(props);
         this.handleLoginClick = this.handleLoginClick.bind(this);
-        this.state = {isLoggedIn: false};
         const parametros = this.getHashParams();
         this.token = parametros.access_token;
-        if(this.state = false){
-            this.texto = "Login";
+        this.texto = "Login";
+        //this.state = {isLoggedIn: false};
+        if(this.token != null){
+            this.state = {isLoggedIn: true}
         } else {
-            this.texto = "Logout";
+            this.state = {isLoggedIn: false};
         }
     }
 
@@ -45,26 +46,43 @@ class LoginControl extends Component {
         })
     }
 
-    handleLoginClick() {
-        if(this.isLoggedIn = false){
-            this.setState({isLoggedIn: true});
-        } else {
-            this.setState({isLoggedIn: false});
-        }
+    handleLoginClick = () => {
+        this.setState({
+            isLoggedIn: !this.state.isLoggedIn
+        })
+        console.log(this.state.isLoggedIn)
+        
     }
+
+    // handleLoginClick() {
+    //     if(this.isLoggedIn = true){
+    //         this.setState({isLoggedIn: false});
+    //         this.link = "http://localhost:3000/";
+    //         console.log(this.isLoggedIn);
+    //     } else {
+    //         this.setState({isLoggedIn: true});
+    //         this.link = "http://localhost:8888/";
+    //         console.log(this.isLoggedIn);
+    //     }
+    // }
 
     render() {
         let isLoggedIn = this.state.isLoggedIn;
+        let buttonLogin;
         let buttonTopTrack;
-        if (isLoggedIn = true){
-            buttonTopTrack = <button onClick={this.topTracks}> Buscar top tracks </button>
+        if (isLoggedIn === true){
+            buttonLogin = <h1>Aproveite as interações</h1>;
+            buttonTopTrack = <button onClick={this.topTracks}> Buscar top tracks </button>;
+            //console.log(isLoggedIn);
         } else {
-            buttonTopTrack = <h1> Faça login </h1>
+            buttonLogin = <ButtonLogin onClick={this.handleLoginClick} texto={this.texto}></ButtonLogin>;
+            buttonTopTrack = <h1> Faça login </h1>;
+            //console.log(isLoggedIn);
         }
 
         return(
             <div>
-                <ButtonLogin onClick={this.handleLoginClick} texto={this.texto}></ButtonLogin>
+                {buttonLogin}
                 {buttonTopTrack}
             </div>
         );

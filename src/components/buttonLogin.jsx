@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class ButtonLogin extends Component {
     render() {
         return (
-            <button onClick={this.props.onClick}><a href="http://localhost:8888/"> {this.props.texto} </a></button>
+            <a href="http://localhost:8888/"><button onClick={this.props.onClick}> {this.props.texto} </button></a>
         )
     }
 
