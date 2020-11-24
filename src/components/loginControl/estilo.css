@@ -1,0 +1,28 @@
+.login-control{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 80%;
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 90%;
+}
+
+.login-control ul{
+    margin: 0;
+    padding: 0;
+    border: 2px solid black;
+    border-radius: 10px;
+    height: 150px;
+    width: 150px;
+}
+
+.login-control ul img{
+    border-radius: 10px;
+    height: 150px;
+}

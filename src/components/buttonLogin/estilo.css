@@ -1,0 +1,13 @@
+.button-component{
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    font-size: 10pt;
+    height: 40px;
+    text-align: center;
+    width: 80px;
+}
+
+.button-component:hover{
+    cursor: pointer;
+}
