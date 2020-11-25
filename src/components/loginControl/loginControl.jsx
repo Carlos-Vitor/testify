@@ -17,8 +17,13 @@ class LoginControl extends Component {
             nome : "",
             email: "",
             images: [],
-            playlist: []
+            playlist: [],
+            pesquisa: [], //objeto recebido da api com o resultado da pesquisa
+            search: "", //vairável que vai na url de pesquisa da API
+            type: ""
         };
+        this.handleSearch = this.handleSearch.bind(this);
+        this.handleType = this.handleType.bind(this);
     }
 
     getHashParams() {
@@ -30,7 +35,7 @@ class LoginControl extends Component {
           hashParams[e[1]] = decodeURIComponent(e[2]);
           e = r.exec(q);
         }
-        console.log(this.token);
+        //console.log(this.token);
         return hashParams;
     }
     
@@ -47,9 +52,10 @@ class LoginControl extends Component {
             this.setState({
                 playlist: dados.items
             });
-            console.log(dados.items);
+            //console.log(dados);
         })
     }
+
 
     perfil = () =>{
         $.ajax({
@@ -66,8 +72,40 @@ class LoginControl extends Component {
                 email : dados.email,
                 images : dados.images
             });
+            //console.log(dados);
+        })
+    }
+
+    pesquisas = () =>{
+        $.ajax({
+          method: "GET", 
+          dataType: "json",
+          url: "https://api.spotify.com/v1/search?q=" + this.state.search + "&type=" + this.state.type,
+          headers: {        
+            Authorization: `Bearer ${this.token}`
+          }
+        })
+        .then(dados => {
+            if(this.state.type === "artist"){ 
+            this.setState({
+                 pesquisa: dados.artists.items
+             });
+            } else {
+                this.setState({
+                    pesquisa: dados.tracks.items
+                })
+            }
             console.log(dados);
         })
+        
+    }
+
+    handleSearch(event){
+        this.setState({search: event.target.value});
+    }
+
+    handleType(event){
+        this.setState({type: event.target.value});
     }
 
     render() {
@@ -76,7 +114,8 @@ class LoginControl extends Component {
         let buttonPlaylist;
         let imagem = this.state.images;
         let playlists = this.state.playlist;
-        console.log(imagem);
+        let pesquisas = this.state.pesquisa;
+        //console.log(pesquisas);
         
         buttonPlaylist = <Button onClick={this.playlists} texto="Listar Playlists"/>;
         buttonLogin = <Button href="http://localhost:8888/" texto="Login no Spotify"/>;
@@ -102,6 +141,29 @@ class LoginControl extends Component {
                         {playlists.map(item => (
                             <li key={item.id}>
                                 {item.name}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="pesquisa">
+                    <input placeholder="artista/musica" type="search" name="search" id="search" value={this.state.value} onChange={this.handleSearch}/>
+                    <button onClick={this.pesquisas}> Pesquisar </button>
+                    <div className="opcoes">
+                        <span>
+                            <input type="radio" name="type" id="artist" value="artist" onChange={this.handleType}/>
+                            <p>Artista</p>
+                        </span>
+                        <span>
+                            <input type="radio" name="type" id="track" value="track" onChange={this.handleType}/>
+                            <p>Música</p>
+                        </span>
+                    </div>                
+                </div>
+                <div className="playlist">
+                    <ul>
+                        {pesquisas.map(item => (
+                            <li key={item.id}>
+                                {<a href={item.external_urls.spotify}> {item.name} </a>}
                             </li>
                         ))}
                     </ul>
