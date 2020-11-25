@@ -16,7 +16,8 @@ class LoginControl extends Component {
         this.state = {
             nome : "",
             email: "",
-            images: []
+            images: [],
+            playlist: []
         };
     }
 
@@ -33,18 +34,20 @@ class LoginControl extends Component {
         return hashParams;
     }
     
-    topTracks = () =>{
+    playlists = () =>{
         $.ajax({
           method: "GET", 
           dataType: "json",
-          url: "https://api.spotify.com/v1/artists/43ZHCT0cAZBISjO8DG9PnE/top-tracks?country=BR",
+          url: "https://api.spotify.com/v1/me/playlists",
           headers: {        
             Authorization: `Bearer ${this.token}`
           }
         })
         .then(dados => {
-          console.log(dados.tracks[0].name);
-          console.log(this.topTracks);
+            this.setState({
+                playlist: dados.items
+            });
+            console.log(dados.items);
         })
     }
 
@@ -70,26 +73,38 @@ class LoginControl extends Component {
     render() {
         
         let buttonLogin;
-        let buttonTopTrack;
+        let buttonPlaylist;
         let imagem = this.state.images;
+        let playlists = this.state.playlist;
         console.log(imagem);
         
-        buttonTopTrack = <Button onClick={this.topTracks} texto="Buscar top tracks"/>;
-        buttonLogin = <Button href="http://localhost:8888/" texto="Acesso ao token"/>;
+        buttonPlaylist = <Button onClick={this.playlists} texto="Listar Playlists"/>;
+        buttonLogin = <Button href="http://localhost:8888/" texto="Login no Spotify"/>;
 
 
         return(
             <div className="login-control">
-                <ul>
-                  {imagem.map(img =>(
-                      <img key = "1" src={img.url} alt=""/>
-                      ))}  
-                </ul>
-                <Perfil nome={this.state.nome} email={this.state.email} ></Perfil>
-                <div className="buttons">
-                    {buttonLogin}
-                    {buttonTopTrack}
-                    <Button onClick={this.perfil} texto="clique aqui"/>
+                <aside>
+                    <ul className="image">
+                        {imagem.map(img =>(
+                            <img key = "1" src={img.url} alt=""/>
+                        ))}  
+                    </ul>
+                    <Perfil nome={this.state.nome} email={this.state.email} ></Perfil>
+                    <div className="buttons">
+                        {buttonLogin}
+                        {buttonPlaylist}
+                        <Button onClick={this.perfil} texto="Mostrar Perfil"/>
+                    </div>
+                </aside>
+                <div className="playlist">
+                    <ul>
+                        {playlists.map(item => (
+                            <li key={item.id}>
+                                {item.name}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             </div>
         );
