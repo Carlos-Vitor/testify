@@ -9,24 +9,24 @@ class LoginControl extends Component {
     constructor(props) {
         super(props);
         const parametros = this.getHashParams();
-        this.token = parametros.access_token;
+        this.token = parametros.access_token; // armazenado o token recebido
         this.newToken = parametros.refresh_token;
         this.texto = "";
         this.href = "";    
         this.state = {
             nome : "",
             email: "",
-            images: [],
-            playlist: [],
-            pesquisa: [], //objeto recebido da api com o resultado da pesquisa
+            images: [], //array recebido da API com a imagem do usuário
+            playlist: [],   //array recebido da API com a lista de playlists
+            pesquisa: [], //array recebido da api com o resultado da pesquisa
             search: "", //vairável que vai na url de pesquisa da API
-            type: ""
+            type: ""    //tipo de pesquisa, se é música ou artista
         };
         this.handleSearch = this.handleSearch.bind(this);
         this.handleType = this.handleType.bind(this);
     }
 
-    getHashParams() {
+    getHashParams() {  //function que gera o mesmo token criado no programa exemplo do Spotify
         var hashParams = {};
         var e, r = /([^&;=]+)=?([^&;]*)/g,
             q = window.location.hash.substring(1);
@@ -39,7 +39,7 @@ class LoginControl extends Component {
         return hashParams;
     }
     
-    playlists = () =>{
+    playlists = () =>{ // Chamda ajax para pegar a lista de playlists
         $.ajax({
           method: "GET", 
           dataType: "json",
@@ -57,7 +57,7 @@ class LoginControl extends Component {
     }
 
 
-    perfil = () =>{
+    perfil = () =>{ // chamada para pegar as informações do usuário logado
         $.ajax({
             method: "GET", 
             dataType: "json",
@@ -76,7 +76,7 @@ class LoginControl extends Component {
         })
     }
 
-    pesquisas = () =>{
+    pesquisas = () =>{ // chamada para pegar informação do que for pesquisado
         $.ajax({
           method: "GET", 
           dataType: "json",
@@ -100,6 +100,8 @@ class LoginControl extends Component {
         
     }
 
+    // eventos para alteração estado do tipo e do resutlado da pesquisa
+
     handleSearch(event){
         this.setState({search: event.target.value});
     }
@@ -112,6 +114,7 @@ class LoginControl extends Component {
         
         let buttonLogin;
         let buttonPlaylist;
+        let buttonPerfil;
         let imagem = this.state.images;
         let playlists = this.state.playlist;
         let pesquisas = this.state.pesquisa;
@@ -119,6 +122,7 @@ class LoginControl extends Component {
         
         buttonPlaylist = <Button onClick={this.playlists} texto="Playlists seguidas"/>;
         buttonLogin = <Button href="http://localhost:8888/" texto="Login no Spotify"/>;
+        buttonPerfil = <Button onClick={this.perfil} texto="Mostrar Perfil"/>;
 
 
         return(
@@ -133,7 +137,7 @@ class LoginControl extends Component {
                     <div className="buttons">
                         {buttonLogin}
                         {buttonPlaylist}
-                        <Button onClick={this.perfil} texto="Mostrar Perfil"/>
+                        {buttonPerfil}
                     </div>
                 </aside>
                 <div className="playlist">
