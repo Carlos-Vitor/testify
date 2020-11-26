@@ -1,16 +1,16 @@
 .login-control{
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-between;
 }
 
 .login-control aside{
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
     height: 300px;
+    justify-content: space-between;
 }
 
 .perfil-div{
@@ -18,17 +18,17 @@
 }
 
 .buttons{
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: space-around;
 }
 
 .image{
-    margin: 0;
-    padding: 0;
     border: 2px solid black;
     border-radius: 10px;
     height: 150px;
+    margin: 0;
+    padding: 0;
     width: 150px;
 }
 
@@ -45,16 +45,16 @@
 
 #search{
     border: 2px solid black;
-    margin-bottom: 3px;
     border-radius: 4px 0 0 4px;
     border-right: 0;
+    margin-bottom: 3px;
 }
 
 .pesquisa button{
+    background-color: white;
     border: 2px solid black;
     border-left: 0;
     border-radius: 0 4px 4px 0;
-    background-color: white;
 }
 
 .pesquisa button:hover{
@@ -62,9 +62,9 @@
 }
 
 .opcoes{
+    align-items: center;
     display: flex;
     font-size: 10pt;
-    align-items: center;
 }
 
 .opcoes span{
@@ -72,7 +72,7 @@
 }
 
 .opcoes span input:hover{
-cursor: pointer;
+    cursor: pointer;
 }
 
 .opcoes span p{

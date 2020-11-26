@@ -117,7 +117,7 @@ class LoginControl extends Component {
         let pesquisas = this.state.pesquisa;
         //console.log(pesquisas);
         
-        buttonPlaylist = <Button onClick={this.playlists} texto="Listar Playlists"/>;
+        buttonPlaylist = <Button onClick={this.playlists} texto="Playlists seguidas"/>;
         buttonLogin = <Button href="http://localhost:8888/" texto="Login no Spotify"/>;
 
 
